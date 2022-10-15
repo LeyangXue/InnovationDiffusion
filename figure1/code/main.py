@@ -2,7 +2,7 @@
 """
 Created on Mon May 10 11:36:29 2021
 
-@author: Administrator
+@author: Leyang Xue
 """
 
 import sys
@@ -230,9 +230,8 @@ def NetSpreadMC(G,networkName,simutimes,ResultPath,eta):
 if __name__ == '__main__':
    
     #set the path
-    #need to set the current path if run the code
-    NetworkPath = '.../innovation_diffution/figure1/network'    #set the network path
-    ResultPath = '.../innovation_diffution/figure1/result'      #set the result path
+    NetworkPath = '.../innovation_diffution/figure1/network'    #need to set the network path if run 
+    ResultPath = '.../innovation_diffution/figure1/result'      #need to set the result path if run 
     
     #set the parameter
     networkName = ['ca-CondMat.txt', 'email-enron-large.txt','soc-advogato.txt']

@@ -149,8 +149,8 @@ def plot_phasepoint(ax,bg_color,data_color,betac,alphac,yup,ydown,row):
     
 if __name__ == '__main__':
     
-    result_path = 'F:/work/work4_dynamic/code-2-1/innovation_diffution/figure1/result'
-    figure_path = 'F:/work/work4_dynamic/code-2-1/innovation_diffution/figure1/figure'
+    result_path = '.../innovation_diffution/figure1/result' #need to set the current path if run 
+    figure_path = '.../innovation_diffution/figure1/figure'
     
     #set the parameter 
     networkName = ['ca-CondMat', 'email-Enron-Large','soc-Advogato']
