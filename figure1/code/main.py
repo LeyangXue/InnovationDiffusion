@@ -6,7 +6,7 @@ Created on Mon May 10 11:36:29 2021
 """
 
 import sys
-sys.path.append('.../innovation_diffution') #need to set the current path if run
+sys.path.append('.../InnovationDiffusion') #need to change ... as root path if run
 from utils import coupling_diffusion as cd
 from multiprocessing import Pool 
 import networkx as nx
@@ -228,10 +228,13 @@ def NetSpreadMC(G,networkName,simutimes,ResultPath,eta):
     ParseResult(results_mc,ResultPath,networkName,eta)
         
 if __name__ == '__main__':
-   
+    
+    #need to change the root path if run 
+    root_path = 'F:/work/work4_dynamic'
+
     #set the path
-    NetworkPath = '.../innovation_diffution/figure1/network'    #need to set the network path if run 
-    ResultPath = '.../innovation_diffution/figure1/result'      #need to set the result path if run 
+    NetworkPath = root_path + '/InnovationDiffusion/figure1/network'  #set the network path if run 
+    ResultPath = root_path + '/InnovationDiffusion/figure1/result'    #set the result path if run 
     
     #set the parameter
     networkName = ['ca-CondMat.txt', 'email-enron-large.txt','soc-advogato.txt']
