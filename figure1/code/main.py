@@ -5,8 +5,11 @@ Created on Mon May 10 11:36:29 2021
 @author: Leyang Xue
 """
 
+#need to change the root path if run 
+root_path = 'F:/work/work4_dynamic'
+
 import sys
-sys.path.append('.../InnovationDiffusion') #need to change ... as root path if run
+sys.path.append(root_path+'/InnovationDiffusion')
 from utils import coupling_diffusion as cd
 from multiprocessing import Pool 
 import networkx as nx
@@ -229,9 +232,6 @@ def NetSpreadMC(G,networkName,simutimes,ResultPath,eta):
         
 if __name__ == '__main__':
     
-    #need to change the root path if run 
-    root_path = 'F:/work/work4_dynamic'
-
     #set the path
     NetworkPath = root_path + '/InnovationDiffusion/figure1/network'  #set the network path if run 
     ResultPath = root_path + '/InnovationDiffusion/figure1/result'    #set the result path if run 
