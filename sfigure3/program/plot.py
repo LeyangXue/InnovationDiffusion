@@ -128,7 +128,7 @@ if __name__ == '__main__':
     #plot the figure
     ms = 200
     mew = 1.5
-    bg_color = '#ababab' #'#CFD2CF' #3b3a3e
+    bg_color = 'black'#'#ababab' #'#CFD2CF' #3b3a3e
     color = ["#4063a3",'#cfcfcf','#ddc000','#d7aca1',"#34b6c6","#79ad41",'#3b3a3e']
     fontsize = 24
     font_label = {'family': "Arial", 'size':fontsize}
@@ -140,7 +140,7 @@ if __name__ == '__main__':
     
     ax[0].scatter(alphacr['R_alphaC'], alphacr['10rhos'],marker='o',s=ms, edgecolors = 'white', linewidths=mew, color=color[4], alpha=alpha)
     ax[0].text(0.005,0.2, r'$\rho$ = '+str(round(s_rho_r,2)), fontdict=font_label)
-    ax[0].text(0.0055,0.08, '(p<0.01)', fontdict= {'family': "Arial", 'size':24, "color":bg_color})
+    ax[0].text(0.006,0.08, '(***)', fontdict= {'family': "Arial", 'size':24, "color":bg_color})
 
     #ax[0].plot(alphacr['R_alphaC'],model_rhos, color = color[-1], lw=1.0, ls='solid')
     #ax[0].errorbar(alphacr['R_alphaC'],alphacr['10rhos'],alphacr['10rhos_CI'], ecolor=color[0],elinewidth=mew, color= color[0], lw='')
@@ -148,12 +148,12 @@ if __name__ == '__main__':
     ax[0].set_xscale('log')
     ax[1].scatter(alphacr['R_alphaC'], alphacr['10time'],marker='o',s=ms, edgecolors = 'white', linewidths=mew, color=color[5],alpha=alpha)
     ax[1].text(0.005,13.2, r'$\rho$ = '+str(round(s_time_r,2)), fontdict=font_label)
-    ax[1].text(0.005,7.5, '(p<0.01)', fontdict= {'family': "Arial", 'size':24, "color":bg_color})
+    ax[1].text(0.006,7.5, '(***)', fontdict= {'family': "Arial", 'size':24, "color":bg_color})
 
     #ax[1].plot(alphacr['R_alphaC'],model_time, color = color[-1], lw=1.0,ls='solid')
     PlotAxes(ax[1],' ','The time \n'+'to reach the 10% adoption', '(b)',mode=False)#
     fig.text(0.45,0.02,'Numerical '+r'$\alpha_c$',fontdict = font_label)
     
-    plt.savefig(figurePath+'/sfigure3.png', dpi=300)
-    plt.savefig(figurePath+'/sfigure3.eps')
-    plt.savefig(figurePath+'/sfigure3.pdf')
+    plt.savefig(figurePath+'/TricriticalPoint.png', dpi=300)
+    plt.savefig(figurePath+'/TricriticalPoint.eps')
+    plt.savefig(figurePath+'/TricriticalPoint.pdf')
