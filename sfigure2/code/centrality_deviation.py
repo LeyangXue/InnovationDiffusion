@@ -277,7 +277,7 @@ def SpearmanCorrelation(modelresults):
     
     return model_corr, model_p 
 
-def MetricsAccuracy(modelresults):
+def MetricsAccuracy(modelresults,realresults):
     '''
     compare the MSLE among different metircs about the deviation of centrality
 
@@ -298,15 +298,19 @@ def MetricsAccuracy(modelresults):
     powerlawmodel_parameter = {}
     powerlawmodel_MSLE = {}
     predictreal_alphac = {}
+    spearmancorr = {}
+    
     for indexname in index_name:
         parameter_rhos = np.polyfit(np.log(modelresults[indexname]),np.log(modelresults['alphac']),1)
         powerlawmodel_parameter[indexname] = parameter_rhos
         predicted_alphac = np.exp(parameter_rhos[1])*np.power(realresults[indexname],parameter_rhos[0])
         MSLE = mean_squared_log_error(realresults['R_alphaC'],predicted_alphac)
         powerlawmodel_MSLE[indexname] = MSLE
+        [rho,p]= spearmanr(realresults['R_alphaC'], predicted_alphac)
+        spearmancorr[indexname] =(rho,p)
         predictreal_alphac[indexname] = [predicted_alphac,realresults['R_alphaC']]
     
-    return powerlawmodel_MSLE, predictreal_alphac
+    return powerlawmodel_MSLE, spearmancorr, predictreal_alphac
 
 def PlotAxes(ax,xlabel,ylabel,title='',legends=False):
     
@@ -377,7 +381,7 @@ def PlotHist(model_corr,powerlawmodel_MSLE):
     plt.savefig(figure_path+'/metrics.png')
     plt.savefig(figure_path+'/metrics.pdf')
 
-def PlotMetricComparision(predictreal_alphac):
+def PlotMetricComparision(predictreal_alphac,spearmancorr):
 
     font_label = {'family': "Arial", 'size':22}
     bg_color = '#ababab' #'#CFD2CF' #3b3a3e
@@ -392,33 +396,39 @@ def PlotMetricComparision(predictreal_alphac):
     
     ax[0,0].loglog(predictreal_alphac['Gini_eigen'][0],predictreal_alphac['Gini_eigen'][1],marker='o', mec=mec,ms=s, ls='', alpha=alpha, mew = mew, color = color[0])
     ax[0,0].plot(x, x, ls='solid',color = bg_color, lw=1.2)
-    ax[0,0].text(0.001,0.00001, 'MSLE='+ str(round(powerlawmodel_MSLE['Gini_eigen'],2)),fontdict=font_label)
-    
+    ax[0,0].text(0.001,0.00001, 'MSLE='+ str(round(powerlawmodel_MSLE['Gini_eigen'],3)),fontdict=font_label)
+    ax[0,0].text(0.001,0.000001, r'$\rho$ ='+ str(round(spearmancorr['Gini_eigen'][0],3))+' (***)',fontdict=font_label)
+
     ax[1,0].loglog(predictreal_alphac['Gini_nonback'][0],predictreal_alphac['Gini_nonback'][1],marker='s',mec=mec,ms=s, ls='', alpha=alpha, mew = mew, color = color[0])
     ax[1,0].plot(x, x, ls='solid',color = bg_color, lw=1.2)
-    ax[1,0].text(0.001,0.00001, 'MSLE='+ str(round(powerlawmodel_MSLE['Gini_nonback'],2)),fontdict=font_label)
+    ax[1,0].text(0.001,0.00001, 'MSLE='+ str(round(powerlawmodel_MSLE['Gini_nonback'],3)),fontdict=font_label)
+    ax[1,0].text(0.001,0.000001, r'$\rho$ ='+ str(round(spearmancorr['Gini_nonback'][0],3))+' (***)',fontdict=font_label)
 
-    ax[0,1].loglog(predictreal_alphac['CV_eigen'][0],predictreal_alphac['CV_eigen'][1],marker='o',mec=mec,ms=s, ls='', alpha=alpha, mew = mew, color = color[1])
+    ax[0,1].loglog(predictreal_alphac['IPV4_eigen'][0],predictreal_alphac['IPV4_eigen'][1],marker='o',mec=mec,ms=s, ls='', alpha=alpha, mew = mew, color = color[1])
     ax[0,1].plot(x, x, ls='solid',color = bg_color, lw=1.2)
-    ax[0,1].text(0.001,0.00001, 'MSLE='+ str(round(powerlawmodel_MSLE['CV_eigen'],2)),fontdict=font_label)
+    ax[0,1].text(0.001,0.00001, 'MSLE='+ str(round(powerlawmodel_MSLE['IPV4_eigen'],3)),fontdict=font_label)
+    ax[0,1].text(0.001,0.000001, r'$\rho$ ='+ str(round(spearmancorr['IPV4_eigen'][0],3))+' (***)',fontdict=font_label)
 
-    ax[1,1].loglog(predictreal_alphac['CV_nonback'][0],predictreal_alphac['CV_nonback'][1],marker='s',mec=mec,ms=s, ls='', alpha=alpha, mew = mew, color = color[1])
+    ax[1,1].loglog(predictreal_alphac['IPV4_nonback'][0],predictreal_alphac['IPV4_nonback'][1],marker='s',mec=mec,ms=s, ls='', alpha=alpha, mew = mew, color = color[1])
     ax[1,1].plot(x, x, ls='solid',color = bg_color, lw=1.2)
-    ax[1,1].text(0.001,0.00001, 'MSLE='+ str(round(powerlawmodel_MSLE['CV_nonback'],2)),fontdict=font_label)
-    
-    ax[0,2].loglog(predictreal_alphac['IPV4_eigen'][0],predictreal_alphac['IPV4_eigen'][1],marker='o',mec=mec,ms=s, ls='', alpha=alpha, mew = mew, color = color[2])
+    ax[1,1].text(0.001,0.00001, 'MSLE='+ str(round(powerlawmodel_MSLE['IPV4_nonback'],3)),fontdict=font_label)
+    ax[1,1].text(0.001,0.000001, r'$\rho$ ='+ str(round(spearmancorr['IPV4_nonback'][0],3))+' (*)',fontdict=font_label)
+
+    ax[0,2].loglog(predictreal_alphac['CV_eigen'][0],predictreal_alphac['CV_eigen'][1],marker='o',mec=mec,ms=s, ls='', alpha=alpha, mew = mew, color = color[2])
     ax[0,2].plot(x, x, ls='solid',color = bg_color, lw=1.2)
-    ax[0,2].text(0.001,0.00001, 'MSLE='+ str(round(powerlawmodel_MSLE['IPV4_eigen'],2)),fontdict=font_label)
-    
-    ax[1,2].loglog(predictreal_alphac['IPV4_nonback'][0],predictreal_alphac['IPV4_nonback'][1],marker='s',mec=mec,ms=s, ls='', alpha=alpha, mew = mew, color = color[2])
+    ax[0,2].text(0.001,0.00001, 'MSLE='+ str(round(powerlawmodel_MSLE['CV_eigen'],3)),fontdict=font_label)
+    ax[0,2].text(0.001,0.000001, r'$\rho$ ='+ str(round(spearmancorr['CV_eigen'][0],3))+' (***)',fontdict=font_label)
+
+    ax[1,2].loglog(predictreal_alphac['CV_nonback'][0],predictreal_alphac['CV_nonback'][1],marker='s',mec=mec,ms=s, ls='', alpha=alpha, mew = mew, color = color[2])
     ax[1,2].plot(x, x, ls='solid',color = bg_color, lw=1.2)
-    ax[1,2].text(0.001,0.00001, 'MSLE='+ str(round(powerlawmodel_MSLE['IPV4_nonback'],2)),fontdict=font_label)
+    ax[1,2].text(0.001,0.00001, 'MSLE='+ str(round(powerlawmodel_MSLE['CV_nonback'],3)),fontdict={'family': "Arial", 'size':22, 'weight': 'bold'})
+    ax[1,2].text(0.001,0.000001, r'$\rho$ ='+ str(round(spearmancorr['CV_nonback'][0],3))+' (***)',fontdict={'family': "Arial", 'size':22, 'weight': 'bold'})
 
     PlotAxes(ax[0,0],'','  \n Eigenvector',title='(a) Gini',legends=False)
     PlotAxes(ax[1,0],' \n ','  \n Non-backtracking',title='',legends=False)
-    PlotAxes(ax[0,1],'','',title='(b) CV/'+r'$\langle k \rangle$',legends=False)
+    PlotAxes(ax[0,1],'','',title='(b) IPR',legends=False)
     PlotAxes(ax[1,1],' \n ','',title='',legends=False)
-    PlotAxes(ax[0,2],'','',title='(c) IPR',legends=False)
+    PlotAxes(ax[0,2],'','',title='(c) CV/'+r'$\langle k \rangle$',legends=False)
     PlotAxes(ax[1,2],' \n ','',title='',legends=False)
     
     fig.text(0, 0.45, 'Numerical '+ r'$\alpha_c$', fontdict = font_label, rotation = 'vertical')
@@ -456,7 +466,7 @@ if __name__ == '__main__':
     [model_corr, model_p]= SpearmanCorrelation(modelresults)
 
     #fit the powerlaw model
-    [powerlawmodel_MSLE,predictreal_alphac] = MetricsAccuracy(modelresults)
-
+    [powerlawmodel_MSLE, spearmancorr, predictreal_alphac] = MetricsAccuracy(modelresults,realresults)
+    
     #plot the result 
-    PlotMetricComparision(predictreal_alphac)
+    PlotMetricComparision(predictreal_alphac, spearmancorr)
