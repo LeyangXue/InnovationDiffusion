@@ -1,6 +1,6 @@
 # InnovationDiffusion
 
-The code as a part of "Network structure mediates phase transition class of innovation diffusion with higher-order interactions"
+The code as a part of "Network localization strength regulates innovation diffusion with conformity bias"
 
 Here, we provide some codes that are used to perform the numerical simulation and plot the figures in the manuscript.
 
