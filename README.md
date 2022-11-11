@@ -1,6 +1,6 @@
 # InnovationDiffusion
 
-The code as a part of "Network localization strength regulates innovation diffusion with conformity bias"
+The code as a part of "Network localization strength regulates innovation diffusion with macro-level social influence"
 
 Here, we provide some codes that are used to perform the numerical simulation and plot the figures in the manuscript.
 
@@ -9,7 +9,7 @@ The project considers the conformity effect in innovation diffusion and study ho
 For more detailed information, please read the paper.
 
 ## Content 
-The contents contained under each folder (figure1,...,sfigure4) in the directory are consistent with figure in the paper. The networks, codes and results required to plot the figure are respectively listed in corresponding folder. All common used functions are integrated in coupling_diffusion.py, included in the utils.
+The contents contained under each folder (figure1,...,sfigure4) in the directory are consistent with figure in the paper. The networks, codes and results required to plot the figure are listed in corresponding folder, respectively. All common used functions are integrated in coupling_diffusion.py, included in the utils.
 
 ## Install and Run
 
