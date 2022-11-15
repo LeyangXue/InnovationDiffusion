@@ -549,7 +549,7 @@ if __name__ == '__main__':
     #ax[0].loglog(data['DMP_betac'],data['MC_betac'],'o', color = colors[0], ms = msize, mec='white', mew=1.5)
     #ax[1].loglog(data['R_alphaC'],data['P_alphaC'],'o', color = colors[1], ms = msize,mec='white',mew=1.5)
     
-    PlotAxes(ax[0],'Theoretical   '+ r'$\beta_c$','Numerical   '+r'$\beta_c$',title='')
+    PlotAxes(ax[0],'Predicted   '+ r'$\beta_c$','Numerical   '+r'$\beta_c$',title='')
     PlotAxes(ax[1],'Predicted   ' + r'$\alpha_c$','Numerical   ' + r'$\alpha_c$',title='')
     ax[1].legend(loc='center left',bbox_to_anchor=(0.95,0.5),framealpha=0, fontsize=32,handletextpad=0.3,markerscale=3)#
 
@@ -571,7 +571,7 @@ if __name__ == '__main__':
     ax[0].text(0.00015,1.2,'(a)', fontdict = font_label)
     ax[1].text(0.00005,130,'(b)', fontdict = font_label)
 
-    plt.savefig(figure_path+'/figure2.eps')
-    plt.savefig(figure_path+'/figure2.pdf')
-    plt.savefig(figure_path+'/figure2.png',dpi=300)
+    plt.savefig(figure_path+'/Figure2.eps')
+    plt.savefig(figure_path+'/Figure2.pdf')
+    plt.savefig(figure_path+'/Figure2.png',dpi=300)
     
