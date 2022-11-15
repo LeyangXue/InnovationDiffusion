@@ -92,10 +92,10 @@ if __name__ == '__main__':
     ax[1].annotate("Assort.", xy=(10, 0.055), xytext=(1.8,0.025),arrowprops=dict(arrowstyle="->"), size=fontsize)
   
     PlotAxes(ax[1],'  ', '','(b)')
-    fig.text(0.3,0.02,'Proportion of link selection, p', fontdict=font_label)
+    fig.text(0.3,0.02,'Proportion of rewired edges, p', fontdict=font_label)
     
-    plt.savefig(figure_path+'/sfigure4.png',dpi=300)
-    plt.savefig(figure_path+'/sfigure4.pdf')
-    plt.savefig(figure_path+'/sfigure4.eps')
+    plt.savefig(figure_path+'/AssortLS.png',dpi=300)
+    plt.savefig(figure_path+'/AssortLS.pdf')
+    plt.savefig(figure_path+'/AssortLS.eps')
 
     
