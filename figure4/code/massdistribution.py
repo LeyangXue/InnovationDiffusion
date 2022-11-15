@@ -73,7 +73,8 @@ def RhoBetacSpread(G,betac_DMP,alphas,file_path):
             args.append([i,G,betac_DMP,mu,alpha,infected])
     
         pool = Pool(processes=40)    
-        results_mc = pool.map(cd.RunSimuBetaC,args)
+        results_mc = pool.map(RunSimuBetaC,args)
+        pool.close()
         pk.dump(results_mc, open(file_path+'/'+str(alpha)+'_betac_mc.pkl', "wb"))
         
     
@@ -111,7 +112,7 @@ if __name__ == '__main__':
            alphas = np.array([each for each in alphac_variation if each > 0]) 
            
            #create new files
-           spreadpath = spread_path+'/'+networkname
+           spreadpath = spread_path+'/'+networkname + '/'+netname
            cd.mkdir(spreadpath)
 
            #load the network
