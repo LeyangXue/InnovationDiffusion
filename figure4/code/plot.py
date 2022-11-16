@@ -208,7 +208,7 @@ def plot_strategy(axes,result_path,color1, bgcolor):
     #ms = 18
     #alpha1 = 0.5
     #mew = 2
-    complete_data = pd.read_csv('innovation_datasets.csv')
+    complete_data = pd.read_csv(result_path+'/innovation_datasets.csv')
     #axes.plot(complete_data.iloc[23]['P_alphaC'],complete_data.iloc[23]['DMP_betac'], mfc='white', mec=bgcolor, marker='o', ms=ms, alpha=alpha1, mew = mew)#color1[0]
     #axes.plot(complete_data.iloc[52]['P_alphaC'],complete_data.iloc[52]['DMP_betac'], mfc='white', mec=bgcolor, marker='s', ms=ms, alpha=alpha1, mew = mew)#color1[2]
     #axes.plot(complete_data.iloc[53]['P_alphaC'],complete_data.iloc[53]['DMP_betac'], mfc='white', mec=bgcolor, marker='X', ms=ms, alpha=alpha1, mew = mew)#color1[1]
@@ -240,7 +240,7 @@ if __name__ == '__main__':
    figure_path = root_path + '/InnovationDiffusion/figure4/figure'
    
    #load the data 
-   complete_data = pd.read_csv('innovation_datasets.csv')
+   complete_data = pd.read_csv(result_path+'/innovation_datasets.csv')
    
    #classify the networks into several group
    data = classfiy_density(complete_data)
@@ -271,7 +271,7 @@ if __name__ == '__main__':
    plot_strategy(ax[2],result_path,color1,bg_color)
    
    fig.text(0.47,0.01,'Predicted  '+ r'$\alpha_c$', fontdict={'family': "Arial", 'size':38})
-   fig.text(0.00,0.32,'Theoretical  '+r'$\beta_c$', fontdict={'family': "Arial", 'size':38}, rotation = 'vertical')
+   fig.text(0.00,0.32,'Predicted  '+r'$\beta_c$', fontdict={'family': "Arial", 'size':38}, rotation = 'vertical')
 
    plt.savefig(figure_path+'/Figure4.png', dpi=300)
    plt.savefig(figure_path+'/Figure4.eps')
