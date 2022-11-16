@@ -62,7 +62,7 @@ def RhoBetacSpread(G,betac_DMP,alphas,file_path):
     None.
 
     '''
-    simulation = 100000
+    simulation = 5000000
     mu = 1
     
     for alpha in alphas:
@@ -72,11 +72,24 @@ def RhoBetacSpread(G,betac_DMP,alphas,file_path):
             infected = random.choice(list(G.nodes()))
             args.append([i,G,betac_DMP,mu,alpha,infected])
     
-        pool = Pool(processes=40)    
+        pool = Pool(processes=50)    
         results_mc = pool.map(RunSimuBetaC,args)
         pool.close()
         pk.dump(results_mc, open(file_path+'/'+str(alpha)+'_betac_mc.pkl', "wb"))
         
+def PlotAxes(ax,xlabel,ylabel,title):
+    
+    fontsize = 14
+    n_legend = 14
+    
+    font_label = {'family': "Arial", 'size':fontsize}
+    ax.set_xlabel(xlabel,  fontdict = font_label)
+    ax.set_ylabel(ylabel, fontdict = font_label)
+    ax.tick_params(direction='out', which='major',length =4, width=1, pad=1,labelsize=n_legend)
+    ax.set_title(title, loc='left',fontdict = {'family': "Arial", 'size':n_legend})
+    ax.set_xticks([0.00001,0.001, 0.1])
+    ax.set_yticks([0.0000001,0.00001,0.001,0.1])
+    #ax.text(index[0],index[1],title,fontdict = font_label)
     
 if __name__ == '__main__':   
     
@@ -84,62 +97,63 @@ if __name__ == '__main__':
     network_path = root_path + '/InnovationDiffusion/sfigure5/network'
     result_path =  root_path + '/InnovationDiffusion/sfigure5/result'
     spread_path =  root_path + '/InnovationDiffusion/sfigure5/spread'
-    
-    #networks 
-    networks = ['soc-delicious.txt', 'soc-fb-pages-artist.txt','soc-advogato.txt','ca-InterdisPhysics.txt']
+    figure_path =  root_path + '/InnovationDiffusion/sfigure5/figure'
     
     #run the simulation for various numerical alpha_c 
-    network = networks[1]
+    network = 'soc-fb-pages-artist.txt'
         
     #set the network name       
     networkname  = network.split('.txt')[0]
     
-    #load the network inforamtion for each datatset
-    data = pd.read_csv(result_path+'/'+networkname+'.csv')
-    datasort = data.sort_values(by=['DMP_betac'])
+    #set the basic parameter 
+    betac_dmp = 0.0057
+    netname = 'soc-fb-pages-artist'
+    alphas = list(map(lambda x: round(x,2), np.arange(0.12,0.20,0.01)))
     
-    #for each network 
-    for index in datasort.index:
+    #create new files
+    spreadpath = spread_path+'/'+networkname
+    cd.mkdir(spreadpath)
     
-        #set the basic parameter 
-        alphac_p = datasort.iloc[index]['alphac_p']
-        netname = datasort.iloc[index]['network']
-        betac_dmp = datasort.iloc[index]['DMP_betac']
-        
-        #print('network:', netname)
-        
-        #set the alphac, usually artificial setting 
-        alphac_standard= round(alphac_p,2)
-        interval = list(map(lambda x: round(x,2),np.arange(-0.1,0.1,0.01))) #a example, need to change according to the experiment results 
-        alphac_variation = alphac_standard + interval
-        alphas = np.array([each for each in alphac_variation if each > 0]) 
+    #load the network
+    data = np.loadtxt(network_path+'/'+network)
+    G = cd.load_network(data)
     
-        #create new files
-        spreadpath = spread_path+'/'+networkname
-        cd.mkdir(spreadpath)
-    
-        #load the network
-        G = nx.read_edgelist(network_path+'/'+networkname+'/'+netname)
-    
-        #spreading on the network with a given betac and alpha
-        RhoBetacSpread(G,betac_dmp,alphas,spreadpath)
+    #spreading on the network with a given betac and alpha
+    RhoBetacSpread(G,betac_dmp,alphas,spreadpath)
     
     #numerical alpha_c identified by mass distribution of rhos
     #plot the result
-    file = '/Assort_p0.6_soc-fb-pages-artis.edgelist/'
-    figure = "fig1.png"
-    alphas = list(map(lambda x: round(x,2),np.arange(0.13,0.19,0.01)))
+    #file = '/Assort_p0.6_soc-fb-pages-artis.edgelist/'
+    fontsize = 14
+    font_label = {'family': "Arial", 'size':fontsize}
+    titles = ['(a)', '(b)','(c)','(d)','(e)','(f)','(g)','(h)','(i)']
+    figure = "massdistribution"
+    
+    
+    alphas = list(map(lambda x: round(x,2),np.arange(0.12,0.2,0.01)))
     mass = {}
-    color = plt.get_cmap('Paired')
-    n = 4
+    color = '#4063a3'
+    n = 3
     row = int(np.ceil(len(alphas)/n))
-    fig, ax = plt.subplots(row,n,figsize=(n*2,row*2), sharey=True, sharex=True, constrained_layout=True)
+    fig, ax = plt.subplots(row,n,figsize=(n*2.5,row*2.5), sharey=True, sharex=True, constrained_layout=True)
     for i,alpha in enumerate(alphas):
         x = int(i/n)
         y = int(i%n)
-        rhos_mc = cd.load(spreadpath+file+str(alpha)+'_betac_mc.pkl')
+        rhos_mc = cd.load(spreadpath+'/'+str(alpha)+'_betac_mc.pkl')
         mass[alpha]= cd.massDistribution(rhos_mc)
-        ax[x,y].loglog(mass[alpha].keys(),mass[alpha].values(),'o',mec=color(1),mfc='white')
-        ax[x,y].set_title(r'$\alpha$='+str(alpha))
-        
-    plt.savefig(spread_path+'/'+networkname+file+figure,dpi=200)
+        ax[x,y].loglog(mass[alpha].keys(),mass[alpha].values(),'o',mec=color,mfc='white',ms=6)
+        ax[x,y].text(0.001,0.1,titles[i]+ r' $\alpha$='+str(alpha),fontdict=font_label)
+        PlotAxes(ax[x,y],'','','')#titles[i]+ r'       $\alpha$='+str(alpha)
+    
+    PlotAxes(ax[0,0],'','  ', '')#r'(a) $\alpha$=0.12'
+    PlotAxes(ax[1,0],'','  ', '')#r'(d) $\alpha$=0.15'
+    PlotAxes(ax[2,0],'  ','  ', '')#r'(g) $\alpha$=0.18'
+    PlotAxes(ax[2,1],'  ','','')#r'(h) $\alpha$=0.19'
+    PlotAxes(ax[2,2],'  ','','')#r'(i) $\alpha$=0.20'
+    
+    fig.text(0.32,0.01,'Proportion of adopted clusters,  '+ '$m/N$', fontdict = font_label)
+    fig.text(0.0,0.24,'Probability for proportion of adopted clusters, '+ '$P(m/N)$', fontdict = font_label, rotation='vertical')
+
+    plt.savefig(figure_path+'/'+figure+'.png',dpi=300)
+    plt.savefig(figure_path+'/'+figure+'.pdf')
+    plt.savefig(figure_path+'/'+figure+'.eps')
