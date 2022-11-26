@@ -108,7 +108,7 @@ def plot_alpbacBetac(axes,complete_data,alphac,betac,color):
     n_legend = 24
    
     axes.plot(alphac,betac[:,0],'-',color=linecolor, label=r'$\langle k\rangle$=2',lw=1.5)
-    sns.scatterplot(data=complete_data, x='P_alphaC', y= 'DMP_betac',hue='Type',style='Type',s=size,ax=axes,legend="full",palette=color)
+    sns.scatterplot(data=complete_data, x='R_alphaC', y= 'MC_betac',hue='Type',style='Type',s=size,ax=axes,legend="full",palette=color)
     PlotAxes(axes,' ',' ','(a)')#x:Predicted  '+ r'$\alpha_c$, y:Theoretical  '+r'$\beta_c$
    
     axes.legend(loc='upper right',bbox_to_anchor=(1.0,1.0),framealpha=0, fontsize=n_legend,handletextpad=0.1,markerscale=3.0)
@@ -143,7 +143,7 @@ def plot_alpbacBetac_loglog(axes,data,alphc,betac,color):
    alpha2 = 1
    
    #plot the figure
-   sns.scatterplot(data=data, x='P_alphaC', y= 'DMP_betac', hue='group_k',style='group_k',hue_order=orders,style_order=orders,legend="full",s=size,ax=axes,palette=color, alpha=alpha2)
+   sns.scatterplot(data=data, x='R_alphaC', y= 'MC_betac', hue='group_k',style='group_k',hue_order=orders,style_order=orders,legend="full",s=size,ax=axes,palette=color, alpha=alpha2)
    axes.loglog(alphc,betac[:,0],'-',color=color[0],label=r'$\langle k\rangle$=2',lw=lw)
    axes.loglog(alphc,betac[:,1],'-',color=color[1],label=r'$\langle k\rangle$=5',lw=lw)
    axes.loglog(alphc,betac[:,2],'-',color=color[2],label=r'$\langle k\rangle$=10',lw=lw)
@@ -182,14 +182,14 @@ def plot_strategy(axes,result_path,color1, bgcolor):
     
     #plot the scatter
     size = 350
-    sns.scatterplot(data=inter_data, x='alphac_p', y= 'DMP_betac',s=size,ax=axes, marker='o', color=color1[0])
-    sns.scatterplot(data=advogato_data, x='alphac_p', y= 'DMP_betac',s=size,ax=axes, marker='s', color=color1[2])
-    sns.scatterplot(data=delicious_data, x='alphac_p', y= 'DMP_betac',s=size,ax=axes, marker='X',color=color1[1])
-    sns.scatterplot(data=fb_pages_artist, x='alphac_p', y= 'DMP_betac',s=size,ax=axes, marker='P', color=color1[3])
+    sns.scatterplot(data=inter_data, x='alphac_r', y= 'MC_betac',s=size,ax=axes, marker='o', color=color1[0])
+    sns.scatterplot(data=advogato_data, x='alphac_r', y= 'MC_betac',s=size,ax=axes, marker='s', color=color1[2])
+    sns.scatterplot(data=delicious_data, x='alphac_r', y= 'MC_betac',s=size,ax=axes, marker='X',color=color1[1])
+    sns.scatterplot(data=fb_pages_artist, x='alphac_r', y= 'MC_betac',s=size,ax=axes, marker='P', color=color1[3])
     #sns.scatterplot(data=soc_twitter_Huawei, x='alphac_p', y= 'DMP_betac',s=size,ax=axes, marker='h', color=color1[4])
     
     #plot the theoretical lines 
-    alphac = np.arange(0.1,3,0.1)
+    alphac = np.arange(0.05,3,0.1)
     ks = [2,5,10,20,100]
     lambd = 2.63
     [talphac,tbetac] = theoretical_results(alphac,ks,lambd)
@@ -208,30 +208,30 @@ def plot_strategy(axes,result_path,color1, bgcolor):
     #ms = 18
     #alpha1 = 0.5
     #mew = 2
-    complete_data = pd.read_csv(result_path+'/innovation_datasets.csv')
+    #complete_data = pd.read_csv(result_path+'/innovation_datasets.csv')
     #axes.plot(complete_data.iloc[23]['P_alphaC'],complete_data.iloc[23]['DMP_betac'], mfc='white', mec=bgcolor, marker='o', ms=ms, alpha=alpha1, mew = mew)#color1[0]
     #axes.plot(complete_data.iloc[52]['P_alphaC'],complete_data.iloc[52]['DMP_betac'], mfc='white', mec=bgcolor, marker='s', ms=ms, alpha=alpha1, mew = mew)#color1[2]
     #axes.plot(complete_data.iloc[53]['P_alphaC'],complete_data.iloc[53]['DMP_betac'], mfc='white', mec=bgcolor, marker='X', ms=ms, alpha=alpha1, mew = mew)#color1[1]
     #axes.plot(complete_data.iloc[55]['P_alphaC'],complete_data.iloc[55]['DMP_betac'], mfc='white', mec=bgcolor, marker='P', ms=ms, alpha=alpha1, mew = mew)#color1[3]
     
     fonts = 24
-    font_label2 = {'family': "Arial", 'size':fonts, 'rotation':-12, 'color':bgcolor}
-    font_label3 = {'family': "Arial", 'size':fonts, 'rotation':-12, 'color':bgcolor}
-    font_label4 = {'family': "Arial", 'size':fonts, 'rotation':-26, 'color':bgcolor}
-    font_label5 = {'family': "Arial", 'size':fonts, 'rotation':-13, 'color':bgcolor}
+    font_label2 = {'family': "Arial", 'size':fonts, 'rotation':-10, 'color':bgcolor}
+    font_label3 = {'family': "Arial", 'size':fonts, 'rotation':-15, 'color':bgcolor}
+    font_label4 = {'family': "Arial", 'size':fonts, 'rotation':-38, 'color':bgcolor}
+    font_label5 = {'family': "Arial", 'size':fonts, 'rotation':-15, 'color':bgcolor}
 
     dataname = ['InterdisPhysics', 'Advogato','Delicious', 'Fb-pages-artist']
-    axes.text(0.34,0.12,dataname[0],fontdict=font_label2)
+    axes.text(0.33,0.11,dataname[0],fontdict=font_label2)
     
-    axes.annotate("", xy=(0.10,0.33), xytext=(0.29,0.22),arrowprops=dict(arrowstyle="->",mutation_aspect=2, shrinkA=5,color=color1[0], lw=2))
-    axes.text(0.10,0.29,'Disassortative',color=color1[0],rotation=-8,size=20)
+    axes.annotate("", xy=(0.06,0.35), xytext=(0.28,0.29),arrowprops=dict(arrowstyle="->",mutation_aspect=2, shrinkA=5,color=color1[0], lw=2))
+    axes.text(0.06,0.34,'Disassortative',color=color1[0],rotation=-8,size=20)
     
     axes.annotate("", xy=(3.0,0.025), xytext=(1.4,0.073),arrowprops=dict(arrowstyle="->",mutation_aspect=2, shrinkA=5,color=color1[0],lw=2))
-    axes.text(1.4,0.032,'Assortative',color=color1[0],rotation=-25,size=20)
-    axes.text(1.3039,0.0033,dataname[2],fontdict=font_label4)
+    axes.text(1.4,0.031,'Assortative',color=color1[0],rotation=-27,size=20)
+    axes.text(0.9,0.0028,dataname[2],fontdict=font_label4)
 
-    axes.text(complete_data.iloc[52]['P_alphaC']-complete_data.iloc[52]['P_alphaC']/3,complete_data.iloc[52]['DMP_betac']+complete_data.iloc[52]['DMP_betac']/5,dataname[1],fontdict=font_label3)
-    axes.text(0.0949,0.00183,dataname[3],fontdict=font_label5)
+    axes.text(0.19,0.01771116,dataname[1],fontdict=font_label3)
+    axes.text(0.05,0.002,dataname[3],fontdict=font_label5)
 
 if __name__ == '__main__':
    
@@ -270,8 +270,8 @@ if __name__ == '__main__':
    #varying the network structure but preserve the average degree 
    plot_strategy(ax[2],result_path,color1,bg_color)
    
-   fig.text(0.47,0.01,'Predicted  '+ r'$\alpha_c$', fontdict={'family': "Arial", 'size':38})
-   fig.text(0.00,0.32,'Predicted  '+r'$\beta_c$', fontdict={'family': "Arial", 'size':38}, rotation = 'vertical')
+   fig.text(0.47,0.01,'Numerical  '+ r'$\alpha_c$', fontdict={'family': "Arial", 'size':38})
+   fig.text(0.00,0.32,'Numerical  '+r'$\beta_c$', fontdict={'family': "Arial", 'size':38}, rotation = 'vertical')
 
    plt.savefig(figure_path+'/Figure4.png', dpi=300)
    plt.savefig(figure_path+'/Figure4.eps')

@@ -123,9 +123,9 @@ def NetSpreadMC(G,networkName,simutimes,ResultPath,alpha,betas):
 if __name__ == '__main__':
     
     root_path = 'F:/work/work4_dynamic' #need to change if run this code
-    network_path =  root_path + '/InnovationDiffusion/sfigure6/network'
-    result_path = root_path + '/InnovationDiffusion/sfigure6/result'
-    mcspread_path = root_path +'/InnovationDiffusion/sfigure6/mcspread'
+    network_path =  root_path + '/InnovationDiffusion/figur4/network'
+    result_path = root_path + '/InnovationDiffusion/figure4/result'
+    mcspread_path = root_path +'/InnovationDiffusion/figure4/mcspread'
     
     #networks 
     networks = ['soc-delicious.txt', 'soc-fb-pages-artist.txt','soc-advogato.txt','ca-InterdisPhysics.txt']

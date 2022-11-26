@@ -79,8 +79,8 @@ def RhoBetacSpread(G,betac_DMP,alphas,file_path):
         
 def PlotAxes(ax,xlabel,ylabel,title):
     
-    fontsize = 14
-    n_legend = 14
+    fontsize = 13
+    n_legend = 13
     
     font_label = {'family': "Arial", 'size':fontsize}
     ax.set_xlabel(xlabel,  fontdict = font_label)
@@ -152,7 +152,7 @@ if __name__ == '__main__':
     PlotAxes(ax[2,2],'  ','','')#r'(i) $\alpha$=0.20'
     
     fig.text(0.32,0.01,'Proportion of adopted clusters,  '+ '$m/N$', fontdict = font_label)
-    fig.text(0.0,0.24,'Probability for proportion of adopted clusters, '+ '$P(m/N)$', fontdict = font_label, rotation='vertical')
+    fig.text(0.0,0.14,'Probability of observing clusters of adopters of different sizes, '+ '$P(m/N)$', fontdict = font_label, rotation='vertical')
 
     plt.savefig(figure_path+'/'+figure+'.png',dpi=300)
     plt.savefig(figure_path+'/'+figure+'.pdf')

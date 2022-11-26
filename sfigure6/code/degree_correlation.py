@@ -176,8 +176,8 @@ if __name__ == '__main__':
     
     #set the path 
     root_path  = 'F:/work/work4_dynamic' #please change the current path if run this code 
-    network_path = root_path + '/InnovationDiffusion/figure4/network'
-    result_path = root_path + '/InnovationDiffusion/figure4/result'
+    network_path = root_path + '/InnovationDiffusion/sfigure6/network'
+    result_path = root_path + '/InnovationDiffusion/sfigure6/result'
     
     networks = ['soc-delicious.txt', 'soc-fb-pages-artist.txt','soc-advogato.txt','ca-InterdisPhysics.txt']
     #set the parameter

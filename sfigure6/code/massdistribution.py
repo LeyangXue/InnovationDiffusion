@@ -89,46 +89,44 @@ if __name__ == '__main__':
     networks = ['soc-delicious.txt', 'soc-fb-pages-artist.txt','soc-advogato.txt','ca-InterdisPhysics.txt']
     
     #run the simulation for various numerical alpha_c 
-    network = networks[1]
+    for network in networks:
         
-    #set the network name       
-    networkname  = network.split('.txt')[0]
-    
-    #load the network inforamtion for each datatset
-    data = pd.read_csv(result_path+'/'+networkname+'.csv')
-    datasort = data.sort_values(by=['DMP_betac'])
-    
-    #for each network 
-    for index in datasort.index:
-    
-        #set the basic parameter 
-        alphac_p = datasort.iloc[index]['alphac_p']
-        netname = datasort.iloc[index]['network']
-        betac_dmp = datasort.iloc[index]['DMP_betac']
+        #set the network name       
+        networkname  = network.split('.txt')[0]
         
-        #print('network:', netname)
-        
-        #set the alphac, usually artificial setting 
-        alphac_standard= round(alphac_p,2)
-        interval = list(map(lambda x: round(x,2),np.arange(-0.1,0.1,0.01))) #a example, need to change according to the experiment results 
-        alphac_variation = alphac_standard + interval
-        alphas = np.array([each for each in alphac_variation if each > 0]) 
+        #load the network inforamtion for each datatset
+        data = pd.read_csv(result_path+'/'+networkname+'.csv')
+        datasort = data.sort_values(by=['DMP_betac'])
     
-        #create new files
-        spreadpath = spread_path+'/'+networkname
-        cd.mkdir(spreadpath)
-    
-        #load the network
-        G = nx.read_edgelist(network_path+'/'+networkname+'/'+netname)
-    
-        #spreading on the network with a given betac and alpha
-        RhoBetacSpread(G,betac_dmp,alphas,spreadpath)
+        #for each network 
+        for index in datasort.index:
+           #set the basic parameter 
+           alphac_p = datasort.iloc[index]['alphac_p']
+           netname = datasort.iloc[index]['network']
+           betac_dmp = datasort.iloc[index]['DMP_betac']
+           
+           #set the alphac, usually artificial
+           alphac_standard= round(alphac_p,2)
+           interval = list(map(lambda x: round(x,2),np.arange(-1,1,0.01))) #a example, need to change according to the experiment results 
+           alphac_variation = alphac_standard + interval
+           alphas = np.array([each for each in alphac_variation if each > 0]) 
+           
+           #create new files
+           spreadpath = spread_path+'/'+networkname + '/'+netname
+           cd.mkdir(spreadpath)
+
+           #load the network
+           G = nx.read_edgelist(result_path+'/'+networkname+'/'+netname)
+           
+           #spreading on the network with a given betac and alpha
+           RhoBetacSpread(G,betac_dmp,alphas,spreadpath)
     
     #numerical alpha_c identified by mass distribution of rhos
     #plot the result
-    file = '/Assort_p0.6_soc-fb-pages-artis.edgelist/'
-    figure = "fig1.png"
-    alphas = list(map(lambda x: round(x,2),np.arange(0.13,0.19,0.01)))
+    file = '/Assort_p1.0_soc-deliciou/'
+    figure = "fig4.png"
+    networkname = networks[0]
+    alphas = list(map(lambda x: round(x,2),np.arange(1.70,1.80,0.02)))
     mass = {}
     color = plt.get_cmap('Paired')
     n = 4
@@ -137,7 +135,7 @@ if __name__ == '__main__':
     for i,alpha in enumerate(alphas):
         x = int(i/n)
         y = int(i%n)
-        rhos_mc = cd.load(spreadpath+file+str(alpha)+'_betac_mc.pkl')
+        rhos_mc = cd.load(spread_path+file+str(alpha)+'_betac_mc.pkl')
         mass[alpha]= cd.massDistribution(rhos_mc)
         ax[x,y].loglog(mass[alpha].keys(),mass[alpha].values(),'o',mec=color(1),mfc='white')
         ax[x,y].set_title(r'$\alpha$='+str(alpha))
