@@ -5,7 +5,7 @@ Created on Sun Sep 18 22:53:41 2022
 @author: Leyang Xue
 """
 
-root_path  = 'F:/work/work4_dynamic' #please change the current path if run this code 
+root_path  = 'G:/work/work4_dynamic' #please change the current path if run this code 
 
 import sys
 sys.path.append(root_path + '/InnovationDiffusion')
@@ -428,7 +428,7 @@ def PlotMetricComparision(predictreal_alphac,spearmancorr):
     PlotAxes(ax[1,0],' \n ','  \n Non-backtracking',title='',legends=False)
     PlotAxes(ax[0,1],'','',title='(b) IPR',legends=False)
     PlotAxes(ax[1,1],' \n ','',title='',legends=False)
-    PlotAxes(ax[0,2],'','',title='(c) CV/'+r'$\langle k \rangle$',legends=False)
+    PlotAxes(ax[0,2],'','',title='(c) RSD',legends=False)
     PlotAxes(ax[1,2],' \n ','',title='',legends=False)
     
     fig.text(0, 0.45, 'Numerical '+ r'$\alpha_c$', fontdict = font_label, rotation = 'vertical')
@@ -444,7 +444,7 @@ def PlotMetricComparision(predictreal_alphac,spearmancorr):
        
 if __name__ == '__main__':
     
-    root_path  = 'F:/work/work4_dynamic' #please change the current path if run this code 
+    root_path  = 'G:/work/work4_dynamic' #please change the current path if run this code 
 
     modelnetworkpath = root_path + '/InnovationDiffusion/sfigure3/network/modelnetworks'
     realnetworkpath = root_path + '/InnovationDiffusion/sfigure3/network/realnetworks'
