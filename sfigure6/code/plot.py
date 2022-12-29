@@ -71,8 +71,8 @@ def classfiy_density(data):
 
 def PlotAxes(ax,xlabel,ylabel,title):
     
-    fontsize = 38
-    n_legend = 36
+    fontsize = 30
+    n_legend = 30
     
     font_label = {'family': "Arial", 'size':fontsize}
     ax.set_xlabel(xlabel,  fontdict = font_label)
@@ -109,7 +109,7 @@ def plot_alpbacBetac(axes,complete_data,alphac,betac,color):
    
     axes.plot(alphac,betac[:,0],'-',color=linecolor, label=r'$\langle k\rangle$=2',lw=1.5)
     sns.scatterplot(data=complete_data, x='P_alphaC', y= 'DMP_betac',hue='Type',style='Type',s=size,ax=axes,legend="full",palette=color)
-    PlotAxes(axes,' ',' ','(a)')#x:Predicted  '+ r'$\alpha_c$, y:Theoretical  '+r'$\beta_c$
+    PlotAxes(axes,'',' ','(a)')#x:Predicted  '+ r'$\alpha_c$, y:Theoretical  '+r'$\beta_c$
    
     axes.legend(loc='upper right',bbox_to_anchor=(1.0,1.0),framealpha=0, fontsize=n_legend,handletextpad=0.1,markerscale=3.0)
 
@@ -150,7 +150,7 @@ def plot_alpbacBetac_loglog(axes,data,alphc,betac,color):
    axes.loglog(alphc,betac[:,3],'-',color=color[3],label=r'$\langle k\rangle$=20',lw=lw)
    axes.loglog(alphc,betac[:,4],'-',color=color[4],label=r'$\langle k\rangle$=100',lw=lw)
    
-   PlotAxes(axes,' ','','(b)')#Predicted  '+ r'$\alpha_c$,Theoretical  '+r'$\beta_c$   
+   PlotAxes(axes,'','','(b)')#Predicted  '+ r'$\alpha_c$,Theoretical  '+r'$\beta_c$   
    axes.legend(loc='lower left',bbox_to_anchor=(-0.01,-0.02),framealpha=0, ncol=2,fontsize=n_legend,handletextpad=0.1,markerscale=3.0,columnspacing=-0.1,borderaxespad=0.05)
    #axes.text(0.0000010,5,'(b)',fontdict = font_label)
    axes.set_yticks([0.00000001,0.000001,0.0001,0.01,1])
@@ -200,7 +200,7 @@ def plot_strategy(axes,result_path,color1, bgcolor):
     axes.loglog(talphac,tbetac[:,3],'-',color=color1[3],label=r'$\langle k\rangle$=20', lw=2)
     axes.loglog(talphac[0:3],tbetac[:,4][0:3],'-',color=color1[4],label=r'$\langle k\rangle$=100', lw=2)
    
-    PlotAxes(axes,' ','','(c)')#Predicted '+ r'$\alpha_c$,Theoretical  '+r'$\beta_c$
+    PlotAxes(axes,' ',' ','(c)')#Predicted '+ r'$\alpha_c$,Theoretical  '+r'$\beta_c$
     axes.set_xscale('log')
     axes.set_yscale('log')
     
@@ -233,9 +233,41 @@ def plot_strategy(axes,result_path,color1, bgcolor):
     axes.text(complete_data.iloc[52]['P_alphaC']-complete_data.iloc[52]['P_alphaC']/3,complete_data.iloc[52]['DMP_betac']+complete_data.iloc[52]['DMP_betac']/5,dataname[1],fontdict=font_label3)
     axes.text(0.0949,0.00183,dataname[3],fontdict=font_label5)
 
+def PlotSF(axes, result_path, color):
+   
+   #load the data
+   results_22 = pd.read_csv(result_path + '/22_statistic_result.csv')
+   results_26 = pd.read_csv(result_path + '/26_statistic_result.csv')
+   results_33 = pd.read_csv(result_path + '/33_statistic_result.csv')
+   
+   #set the parameter
+   lambd = 2.63
+   ks = [2.7769,3.9465,5.9302]
+   alphac = np.arange(0.1,10,0.01)   
+   
+   #calculate the theoretical result on uncorrelation network 
+   [alphac,betac] = theoretical_results(alphac,ks,lambd)
+  
+   #plot the result
+   size =18
+   n_legend = 24
+   lw = 2
+   
+   axes.loglog(alphac,betac[:,0],'-',color=color[0],label=r'$\langle k\rangle$=2.77',lw=lw)
+   axes.loglog(alphac,betac[:,1],'-',color=color[2],label=r'$\langle k\rangle$=3.95',lw=lw)
+   axes.loglog(alphac,betac[:,2],'-',color=color[4],label=r'$\langle k\rangle$=5.93',lw=lw)
+   axes.loglog(results_33['alphac_p'],results_33['DMP_betac'],'o',color=color[0],label=r'$\gamma=3.3$',lw=lw, ms=size, mec='white', mew=1)
+   axes.loglog(results_26['alphac_p'],results_26['DMP_betac'],'X',color=color[2],label=r'$\gamma=2.6$',lw=lw, ms=size, mec='white', mew=1)
+   axes.loglog(results_22['alphac_p'],results_22['DMP_betac'],'s',color=color[4],label=r'$\gamma=2.2$',lw=lw, ms=size, mec='white', mew=1)
+
+   axes.set_ylim(0.0009, 1.2)
+   PlotAxes(axes,' ','','(d)')#Predicted  '+ r'$\alpha_c$,Theoretical  '+r'$\beta_c$   
+   axes.legend(loc='lower left',bbox_to_anchor=(-0.01,-0.02),framealpha=0, ncol=2,fontsize=n_legend,handletextpad=0.1,markerscale=1.0,columnspacing=-0.1,borderaxespad=0.05)
+  
+    
 if __name__ == '__main__':
    
-   root_path = 'F:/work/work4_dynamic' #need to change the current path if run the code
+   root_path = 'G:/work/work4_dynamic' #need to change the current path if run the code
    result_path = root_path + '/InnovationDiffusion/sfigure6/result'    
    figure_path = root_path + '/InnovationDiffusion/sfigure6/figure'
    
@@ -258,20 +290,23 @@ if __name__ == '__main__':
    bg_color = '#3b3a3e'
    
    #plot the result
-   fig,ax = plt.subplots(1,3,figsize = (25,8), constrained_layout=True)
+   fig,ax = plt.subplots(2,2,figsize = (16,15), constrained_layout=True)
    
    #plot the efficience of diffusion for different kinds of networks
    #network are embedded in space spanned by alphac and betac
-   plot_alpbacBetac(ax[0],complete_data,alphac,betac,color1)
+   plot_alpbacBetac(ax[0,0],complete_data,alphac,betac,color1)
    
    #classifying neworks over different average degree 
-   plot_alpbacBetac_loglog(ax[1],data,alphac,betac,color1[:-2])
+   plot_alpbacBetac_loglog(ax[0,1],data,alphac,betac,color1[:-2])
    
    #varying the network structure but preserve the average degree 
-   plot_strategy(ax[2],result_path,color1,bg_color)
+   plot_strategy(ax[1,0],result_path,color1,bg_color)
    
-   fig.text(0.47,0.01,'Predicted  '+ r'$\alpha_c$', fontdict={'family': "Arial", 'size':38})
-   fig.text(0.00,0.32,'Predicted  '+r'$\beta_c$', fontdict={'family': "Arial", 'size':38}, rotation = 'vertical')
+   PlotSF(ax[1,1], result_path, color)
+
+   
+   fig.text(0.46,0.01,'Predicted  '+ r'$\alpha_c$', fontdict={'family': "Arial", 'size':32})
+   fig.text(0.00,0.45,'Predicted  '+ r'$\beta_c$', fontdict={'family': "Arial", 'size':32}, rotation = 'vertical')
 
    plt.savefig(figure_path+'/relation.png', dpi=300)
    plt.savefig(figure_path+'/relation.eps')

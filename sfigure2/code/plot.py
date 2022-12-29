@@ -56,7 +56,7 @@ def plotviolinplot(betacdata,networklabel,figurename):
     ax.set_xticklabels(networklabel, rotation=90)
     ax.grid(axis='both')
     PlotAxes(ax,'Networks',' \n', '')
-    fig.text(0.01,0.35,'Numerical '+ r'$\beta_c$ ' +'- Theoretical '+ r'$\beta_c$',rotation=90, fontdict=font_label)
+    fig.text(0.01,0.35,'Numerical '+ r'$\beta_c$ ' +'- Predicted '+ r'$\beta_c$',rotation=90, fontdict=font_label)
     # styling:
     for body in vp['bodies']:
         body.set_alpha(0.35)
@@ -87,6 +87,6 @@ if __name__ == '__main__':
     betac_sortdegree = loadSpreadData(netsortdegree)
 
     #plot the figure
-    plotviolinplot(betac_sortsize,netsortsize,'sfigure2_ranksize')
-    plotviolinplot(betac_sortdegree,netsortdegree,'sfigure2_rankdegree')
+    plotviolinplot(betac_sortsize,netsortsize,'criticalPoint')
+    plotviolinplot(betac_sortdegree,netsortdegree,'criticalPoint')
     
