@@ -190,20 +190,23 @@ def plot_strategy(axes,result_path,color1, bgcolor):
     
     #plot the theoretical lines 
     alphac = np.arange(0.05,3,0.1)
-    ks = [2,5,10,20,100]
+    ks = [4.87,5.10,15.58,32.43]
     lambd = 2.63
     [talphac,tbetac] = theoretical_results(alphac,ks,lambd)
 
-    axes.loglog(talphac,tbetac[:,0],'-',color=color1[0],label=r'$\langle k\rangle$=2', lw=2)
-    axes.loglog(talphac,tbetac[:,1],'-',color=color1[1],label=r'$\langle k\rangle$=5', lw=2)
-    axes.loglog(talphac,tbetac[:,2],'-',color=color1[2],label=r'$\langle k\rangle$=10', lw=2)
-    axes.loglog(talphac,tbetac[:,3],'-',color=color1[3],label=r'$\langle k\rangle$=20', lw=2)
-    axes.loglog(talphac[0:3],tbetac[:,4][0:3],'-',color=color1[4],label=r'$\langle k\rangle$=100', lw=2)
-   
+    axes.loglog(talphac,tbetac[:,0],'-',color=color1[0],label=r'$\langle k\rangle$=4.87', lw=2)
+    axes.loglog(talphac,tbetac[:,1],'-',color=color1[1],label=r'$\langle k\rangle$=5.10', lw=2)
+    axes.loglog(talphac,tbetac[:,2],'-',color=color1[2],label=r'$\langle k\rangle$=15.58', lw=2)
+    axes.loglog(talphac,tbetac[:,3],'-',color=color1[3],label=r'$\langle k\rangle$=32.43', lw=2)
+    #axes.loglog(talphac[0:3],tbetac[:,4][0:3],'-',color=color1[4],label=r'$\langle k\rangle$=100', lw=2)
+    
+    n_legend = 24
     PlotAxes(axes,' ',' ','(c)')#Predicted '+ r'$\alpha_c$,Theoretical  '+r'$\beta_c$
     axes.set_xscale('log')
     axes.set_yscale('log')
+    axes.legend(loc='lower left',bbox_to_anchor=(-0.01,-0.02),framealpha=0, ncol=1,fontsize=n_legend,handletextpad=0.1,markerscale=3.0,borderaxespad=0.05)
     
+    axes.set_ylim(0.00005,1.1)
     #mark the selected datasets
     #ms = 18
     #alpha1 = 0.5

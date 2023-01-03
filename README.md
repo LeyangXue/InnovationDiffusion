@@ -1,7 +1,7 @@
 # InnovationDiffusion
 
-The code as a part of "Network localization strength regulates innovation diffusion with macro-level social influence"
-
+The code as a part of "Network localization strength regulates innovation diffusion with macro-level social influence".
+Please see the link https://arxiv.org/abs/2301.00151 if you are interested in the paper. 
 Here, we provide some codes that are used to perform the numerical simulation and plot the figures in the manuscript.
 
 ## Describtion 
@@ -40,6 +40,21 @@ $ git clone https://github.com/LeyangXue/InnovationDiffusion.git
 
     **Example**:  if you run the code, e.g. /figure1/code/plot.py, correct it as  
 'F:/work/work4_dynamic' --->  your local path
+
+## Citation
+
+If you use this code or paper for your research, please cite the following:
+
+    @misc{https://doi.org/10.48550/arxiv.2301.00151,
+    doi = {10.48550/ARXIV.2301.00151},
+    url = {https://arxiv.org/abs/2301.00151},
+    author = {Xue, Leyang and Yang, Kai-Cheng and Cui, Peng-Bi and Di, Zengru},
+    keywords = {Physics and Society (physics.soc-ph), FOS: Physical sciences, FOS: Physical sciences},
+    title = {Network localization strength regulates innovation diffusion with macro-level social influence},
+    publisher = {arXiv},
+    year = {2023},
+    copyright = {arXiv.org perpetual, non-exclusive license}
+    }
 
 ## Email
 Any suggestion are welcome and please send your suggestion to hsuehleyang@gmail.com
